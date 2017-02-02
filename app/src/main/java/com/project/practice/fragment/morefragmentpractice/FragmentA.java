@@ -17,9 +17,25 @@ public class FragmentA extends Fragment implements View.OnClickListener {
     int anticount = 0;
     TextView text;
     Bridge bridge;
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_a, container, false);
+        View v = inflater.inflate(R.layout.fragment_a, container, false);
+        if(savedInstanceState == null) {
+            count = 0;
+            anticount = 0;
+        }
+        else   {
+            count = savedInstanceState.getInt("count",0);
+            anticount = savedInstanceState.getInt("anticount",0);
+            TextView textAnti = (TextView) v.findViewById(R.id.textView2);
+            textAnti.setText(""+anticount);
+
+        }
+
+        return v;
 
     }
 
@@ -30,6 +46,13 @@ public class FragmentA extends Fragment implements View.OnClickListener {
         button = (Button)getActivity().findViewById(R.id.button);
         button.setOnClickListener(this);
         text = (TextView) getActivity().findViewById(R.id.textView2);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("count",count);
+        outState.putInt("anticount", anticount);
     }
 
     @Override
